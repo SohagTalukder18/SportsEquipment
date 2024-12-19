@@ -1,5 +1,5 @@
 /* Add this in your CSS file or Tailwind config */
-/* .slider {
+.slider {
     display: flex;
     transition: transform 0.5s ease-in-out;
     animation: slide 10s infinite;
@@ -20,5 +20,5 @@
     100% {
       transform: translateX(0%);
     }
-  } */
+  }
   
