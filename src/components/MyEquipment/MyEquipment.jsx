@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const MyEquipmentList = () => {
   const { user } = useContext(AuthContext);
@@ -26,19 +27,47 @@ const MyEquipmentList = () => {
       .catch((error) => console.error("Error fetching equipment:", error));
   }, [user.email]);
 
-  const handleDelete = (id) => {
-    // console.log(id,"ttttttttttttttttt");
+  // const handleDelete = (id) => {
+  //   // console.log(id,"ttttttttttttttttt");
     
-    fetch(`http://localhost:5000/equipment/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.deletedCount > 0) {
-          setMyEquipment(myEquipment.filter((item) => item._id !== id));
-          alert("Equipment deleted successfully!");
-        }
-      });
+  //   fetch(`http://localhost:5000/equipment/${id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.deletedCount > 0) {
+  //         setMyEquipment(myEquipment.filter((item) => item._id !== id));
+  //         alert("Equipment deleted successfully!");
+  //       }
+  //     });
+  // };
+
+
+
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/equipment/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire("Deleted!", "Your equipment has been deleted.", "success");
+              setMyEquipment((prev) => prev.filter((item) => item._id !== id));
+            }
+          })
+          .catch((error) => console.error("Error deleting equipment:", error));
+      }
+    });
   };
   const handleUpdateEquipment=(id)=>{
     navigate(`/equipment/update/${id}`)

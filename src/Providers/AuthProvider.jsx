@@ -141,7 +141,7 @@ const logInUser = async (email, password) => {
       throw error;
     }
   };
-  const createUser = (email, password) =>{
+  const createUser = (email, password,name) =>{
             setLoading(true);
             return createUserWithEmailAndPassword(auth, email, password);
         }
