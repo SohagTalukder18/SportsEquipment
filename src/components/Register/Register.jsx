@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+// import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
 
 
-  const {createUser} = useContext(AuthContext)
+  const { createUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  // const Navigate = useNavigate()
   // const [formData, setFormData] = useState({
   //   name: "",
   //   email: "",
@@ -30,38 +33,41 @@ const RegisterPage = () => {
     e.preventDefault();
 
 
-    const name = e.target.name.value;
+    const displayName = e.target.name.value;
     const email = e.target.email.value;
-    const photourl = e.target.photoURL.value;
+    const photoURL = e.target.photoURL.value;
     const password = e.target.password.value;
+    console.log(displayName, displayName);
 
 
     createUser(email, password)
-    .then(result => {
-      console.log(result.user)
-      const newUser ={name, email, photourl}
+      .then(result => {
+        console.log(result.user)
+        const newUser = { displayName, email, photoURL }
 
-      fetch('http://localhost:5000/users',{
-        method: 'POST',
-        headers:{
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(newUser)
+        fetch('http://localhost:5000/users', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(newUser)
+        })
+          .then(res => res.json())
+          .then(data => {
+            Swal.fire("Success", "Registration successful!", "success");
+            navigate("/login");
+            console.log(data);
+
+          })
+
       })
-      .then(res =>res.json())
-      .then(data => {
-        console.log(data);
-        
+      .catch(error => {
+        console.log("error", error);
+
       })
-      
-    })
-    .catch(error =>{
-      console.log("error", error);
-      
-    })
 
     // console.log("Register",email, password);
-    
+
     // const { name, email, photoURL, password } = formData;
 
     // if (!validatePassword(password)) {

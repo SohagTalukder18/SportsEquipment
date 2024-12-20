@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 // import { AuthContext } from "../../Providers/AuthProvider";
 
@@ -9,16 +9,26 @@ import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   // const {logInUser} = useContext(AuthContext);
   // const {user}=useContext(AuthContext);
   // console.log(user,'user');
 
-  const {user, setUser, logOutUser}=useContext(AuthContext);
+  const { user, setUser, logOutUser } = useContext(AuthContext);
   // console.log(user,"uuuuuuuuuuuuuuuuuuu");
-  
+
   const navigate = useNavigate();
   // console.log(user);
-  
+
+  useEffect(() => {
+    document.documentElement.className = theme; // Add 'light' or 'dark' class to the root element
+    localStorage.setItem("theme", theme); // Save the theme to localStorage
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
   const handleLogout = () => {
     logOutUser();
     // setUser(null); // Clear user data
@@ -26,7 +36,7 @@ const Navbar = () => {
   };
 
 
-  
+
 
   return (
     <nav className="bg-blue-600 text-white shadow-md">
@@ -129,6 +139,21 @@ const Navbar = () => {
               </Link>
             </div>
           )}
+        </div>
+        <div>
+          {/* <button
+            onClick={toggleTheme}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Switch to {theme === "light" ? "Dark" : "Light"} Mode
+          </button> */}
+
+          <div className="form-control">
+            <label className="label cursor-pointer">
+              {/* <span className="label-text">Remember me</span> */}
+              <input type="checkbox" onClick={toggleTheme} className="toggle" defaultChecked />
+            </label>
+          </div>
         </div>
       </div>
 

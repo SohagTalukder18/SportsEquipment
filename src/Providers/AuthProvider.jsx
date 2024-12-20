@@ -90,7 +90,7 @@
 
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.init";
-import { onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export const AuthContext = createContext(null);
@@ -141,12 +141,17 @@ const logInUser = async (email, password) => {
       throw error;
     }
   };
+  const createUser = (email, password) =>{
+            setLoading(true);
+            return createUserWithEmailAndPassword(auth, email, password);
+        }
 
   const userInfo = {
     user,
     loading,
     logInUser,
     logOutUser,
+    createUser
   };
 
   return (

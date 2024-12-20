@@ -15,10 +15,11 @@ import LogIn from './components/LogIn/LogIn';
 import Register from './components/Register/Register';
 import Root from './components/Root/Root';
 import Error from './components/Error/Error';
-import UpdateEquipment from './components/UpdateEquipment/UpdateEquipment';
 import AuthProvider from './Providers/AuthProvider.jsx';
 import PrivateRoute from './components/PrivetRoute/PrivateRoute.jsx';
 import ViewDetails from './components/ViewDatails/ViewDatails.jsx';
+import UpdateEquipment from './components/UpdateEquipment/UpdateEquipment';
+
 
 const router = createBrowserRouter([
 
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
         loader: ()=>fetch("http://localhost:5000/equipment?limit=6"),
+        // loader: ()=>fetch("http://localhost:5000/equipment"),
       },
       {
         path: "/all-equipment",
@@ -49,6 +51,10 @@ const router = createBrowserRouter([
         // path: "update-equipment",
         // path: "/equipment/:id",
         // element: <UpdateEquipment></UpdateEquipment>,
+        path: "/equipment/update/:id",
+        element: <PrivateRoute><UpdateEquipment/></PrivateRoute>,
+        
+    
       },
       {
         path: "/equipment/:id",

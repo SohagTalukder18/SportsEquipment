@@ -14,7 +14,7 @@ const ViewDetails = () => {
   }, [id]);
 
   if (!itemDetails) {
-    return <div>Loading...</div>; // Show loading while fetching
+    return <div><span className="loading loading-spinner loading-lg"></span></div>; // Show loading while fetching
   }
 
   return (

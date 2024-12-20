@@ -22,3 +22,20 @@
     }
   }
   
+  .spinner-border {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 50%;
+    border-color: #e5e7eb; /* Tailwind gray-300 */
+    border-top-color: #3b82f6; /* Tailwind blue-500 */
+    width: 32px;
+    height: 32px;
+    animation: spinner 0.8s linear infinite;
+  }
+  
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
