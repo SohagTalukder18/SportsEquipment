@@ -17,6 +17,8 @@ import Root from './components/Root/Root';
 import Error from './components/Error/Error';
 import UpdateEquipment from './components/UpdateEquipment/UpdateEquipment';
 import AuthProvider from './Providers/AuthProvider.jsx';
+import PrivateRoute from './components/PrivetRoute/PrivateRoute.jsx';
+import ViewDetails from './components/ViewDatails/ViewDatails.jsx';
 
 const router = createBrowserRouter([
 
@@ -45,8 +47,13 @@ const router = createBrowserRouter([
       },
       {
         // path: "update-equipment",
+        // path: "/equipment/:id",
+        // element: <UpdateEquipment></UpdateEquipment>,
+      },
+      {
         path: "/equipment/:id",
-        element: <UpdateEquipment></UpdateEquipment>,
+        element: <PrivateRoute><ViewDetails/></PrivateRoute>,
+        
       },
       {
         path: "register",
