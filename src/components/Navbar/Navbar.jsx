@@ -1,28 +1,20 @@
 
 import React, { useContext, useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import { AuthContext } from "../../Providers/AuthProvider";
-
-// import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  // const {logInUser} = useContext(AuthContext);
-  // const {user}=useContext(AuthContext);
-  // console.log(user,'user');
-
+ 
   const { user, setUser, logOutUser } = useContext(AuthContext);
-  // console.log(user,"uuuuuuuuuuuuuuuuuuu");
-
+  
   const navigate = useNavigate();
-  // console.log(user);
+  
 
   useEffect(() => {
-    document.documentElement.className = theme; // Add 'light' or 'dark' class to the root element
-    localStorage.setItem("theme", theme); // Save the theme to localStorage
+    document.documentElement.className = theme; 
+    localStorage.setItem("theme", theme); 
   }, [theme]);
 
   const toggleTheme = () => {
@@ -31,19 +23,19 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logOutUser();
-    // setUser(null); // Clear user data
-    navigate("/login"); // Redirect to login
+    
+    navigate("/login"); 
   };
 
 
 
 
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
+    <nav className="bg-blue-600 dark:bg-gray-900 text-white shadow-md">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo/Website Name */}
         <div className="text-2xl font-bold">
-          <Link to="/">SportsGear</Link>
+          <Link to="/">SportsEquipment</Link>
         </div>
 
         {/* Hamburger Menu for Mobile */}
@@ -111,17 +103,18 @@ const Navbar = () => {
           {user ? (
             <div className="flex items-center space-x-4">
               <img
-                src={user.photoURL || "/default-profile.png"}
+                src={user.photoURL || "https://ibb.co.com/R6jHqJG"}
                 alt="User"
                 className="w-10 h-10 rounded-full"
                 title={user.displayName || "User"}
               />
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
+                className="bg-red-500 dark:bg-gray-300 hover:bg-red-600 text-white px-3 py-1 rounded-md"
               >
                 Log Out
               </button>
+             
             </div>
           ) : (
             <div className="flex space-x-4">
@@ -141,12 +134,6 @@ const Navbar = () => {
           )}
         </div>
         <div>
-          {/* <button
-            onClick={toggleTheme}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Switch to {theme === "light" ? "Dark" : "Light"} Mode
-          </button> */}
 
           <div className="form-control">
             <label className="label cursor-pointer">
@@ -154,12 +141,14 @@ const Navbar = () => {
               <input type="checkbox" onClick={toggleTheme} className="toggle" defaultChecked />
             </label>
           </div>
+
         </div>
+
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <ul className="lg:hidden bg-blue-700 text-white space-y-2 p-4">
+        <ul className="lg:hidden bg-blue-700 dark:bg-gray-900 text-white space-y-2 p-4">
           <li>
             <Link to="/" className="block hover:underline">
               Home
@@ -188,25 +177,28 @@ const Navbar = () => {
             <div className="flex flex-col items-start space-y-2">
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
+                className="bg-red-500 dark:bg-gray-300 hover:bg-red-600 text-white px-3 py-1 rounded-md"
               >
                 Log Out
               </button>
+
+              
             </div>
           ) : (
             <div className="flex flex-col items-start space-y-2">
               <Link
                 to="/login"
-                className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md"
+                className="bg-green-500 dark:bg-gray-500 hover:bg-green-600 text-white px-3 py-1 rounded-md"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
+                className="bg-yellow-500 dark:bg-gray-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
               >
                 Register
               </Link>
+              
             </div>
           )}
         </ul>

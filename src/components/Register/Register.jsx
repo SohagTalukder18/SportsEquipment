@@ -1,174 +1,140 @@
-import React, { useContext, useState } from "react";
-// import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../Providers/AuthProvider";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { auth } from "../../firebase/firebase.init";
+
 
 const RegisterPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    photoURL: "",
+    password: "",
+  });
 
-
-  const { createUser } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  // const Navigate = useNavigate()
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   email: "",
-  //   photoURL: "",
-  //   password: "",
-  // });
 
-  // const auth = getAuth();
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/; 
+    return regex.test(password);
+  };
 
-  // const validatePassword = (password) => {
-  //   const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-  //   return regex.test(password);
-  // };
-
-  const handleRegister = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
+    if (!validatePassword(formData.password)) {
+      setError("Password must include uppercase, lowercase letters, and be at least 6 characters long.");
+      return;
+    }
 
-    const displayName = e.target.name.value;
-    const email = e.target.email.value;
-    const photoURL = e.target.photoURL.value;
-    const password = e.target.password.value;
-    console.log(displayName, displayName);
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
 
+      // Update user's displayName and photoURL
+      await updateProfile(user, {
+        displayName: formData.name,
+        photoURL: formData.photoURL,
+      });
 
-    createUser(email, password,displayName)
-      .then(result => {
-        console.log(result.user)
-        const newUser = { displayName, email, photoURL }
+      // Send email verification
+      await sendEmailVerification(user);
 
-        fetch('http://localhost:5000/users', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify(newUser)
-        })
-          .then(res => res.json())
-          .then(data => {
-            Swal.fire("Success", "Registration successful!", "success");
-            navigate("/login");
-            console.log(data);
-
-          })
-
-      })
-      .catch(error => {
-        console.log("error", error);
-
-      })
-
-    // console.log("Register",email, password);
-
-    // const { name, email, photoURL, password } = formData;
-
-    // if (!validatePassword(password)) {
-    //   Swal.fire("Error", "Password must contain uppercase, lowercase letters and be at least 6 characters long.", "error");
-    //   return;
-    // }
-
-    // try {
-    //   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    //   const user = userCredential.user;
-
-    //   // Update user profile
-    //   await updateProfile(user, { displayName: name, photoURL });
-
-    //   // Store user in MongoDB
-    //   const userData = { name, email, photoURL };
-    //   await fetch("http://localhost:5000/addUser", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(userData),
-    //   });
-
-    //   Swal.fire("Success", "Registration successful!", "success");
-    // } catch (error) {
-    //   Swal.fire("Error", error.message, "error");
-    // }
+      Swal.fire("Success", "Account created! Please check your email for verification.", "success");
+      navigate("/login");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 shadow-lg rounded-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md bg-white p-8 shadow-lg rounded-lg dark:bg-gray-800 dark:text-gray-200">
         <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
-        <form onSubmit={handleRegister} className="space-y-4">
+
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
             <input
               type="text"
               name="name"
-              // value={formData.name}
-              // onChange={handleChange}
+              value={formData.name}
+              onChange={handleChange}
               required
-              className="w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter your name"
+              className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600"
             />
           </div>
+
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <input
               type="email"
               name="email"
-              // value={formData.email}
-              // onChange={handleChange}
+              value={formData.email}
+              onChange={handleChange}
               required
-              className="w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter your email"
+              className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600"
+              // className="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
+
           {/* PhotoURL */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Photo URL</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo URL</label>
             <input
-              type="text"
+              type="url"
               name="photoURL"
-              // value={formData.photoURL}
-              // onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter photo URL"
+              value={formData.photoURL}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600"
             />
           </div>
+
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
             <input
               type="password"
               name="password"
-              // value={formData.password}
-              // onChange={handleChange}
+              value={formData.password}
+              onChange={handleChange}
               required
-              className="w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter your password"
+              className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600"
             />
           </div>
-          {/* Submit Button */}
+
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="w-full py-2 bg-blue-600 dark:bg-gray-500 text-white rounded-lg hover:bg-blue-700"
           >
             Register
           </button>
         </form>
-        <p className="text-center mt-4 text-sm">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Login
-          </a>
-        </p>
       </div>
     </div>
   );
 };
 
 export default RegisterPage;
+

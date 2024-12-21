@@ -32,12 +32,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
         loader: ()=>fetch("http://localhost:5000/equipment?limit=6"),
-        // loader: ()=>fetch("http://localhost:5000/equipment"),
+        
       },
       {
         path: "/all-equipment",
         element: <AllEquipment></AllEquipment>,
-        // loader: () => fetch('http://localhost:5000/equipment'),
+        
       },
       {
         path: "/add-equipment",
@@ -48,9 +48,6 @@ const router = createBrowserRouter([
         element: <MyEquipment></MyEquipment>,
       },
       {
-        // path: "update-equipment",
-        // path: "/equipment/:id",
-        // element: <UpdateEquipment></UpdateEquipment>,
         path: "/equipment/update/:id",
         element: <PrivateRoute><UpdateEquipment/></PrivateRoute>,
         
