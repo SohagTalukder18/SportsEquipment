@@ -12,7 +12,7 @@ const UpdateEquipment = () => {
 
   useEffect(() => {
     // Fetch the equipment details by ID
-    fetch(`http://localhost:5000/equipment/${id}`)
+    fetch(`https://assignment-10-server-7oo0pd2sc-sohagtalukder18s-projects.vercel.app//equipment/${id}`)
       .then((res) => res.json())
       .then((data) => setEquipment(data))
       .catch((error) => console.error("Error fetching equipment:", error));
@@ -36,7 +36,7 @@ const UpdateEquipment = () => {
     };
 
     // Send updated data to the server
-    fetch(`http://localhost:5000/equipment/${id}`, {
+    fetch(`https://assignment-10-server-7oo0pd2sc-sohagtalukder18s-projects.vercel.app/equipment/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

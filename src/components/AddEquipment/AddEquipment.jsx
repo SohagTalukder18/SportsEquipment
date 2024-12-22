@@ -32,7 +32,7 @@ const AddEquipmentPage = () => {
         setIsLoading(true); // Show loading spinner
 
         try {
-            const response = await fetch("http://localhost:5000/equipment", {
+            const response = await fetch("https://assignment-10-server-7oo0pd2sc-sohagtalukder18s-projects.vercel.app/equipment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

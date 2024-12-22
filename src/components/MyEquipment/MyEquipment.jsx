@@ -21,7 +21,7 @@ const MyEquipmentList = () => {
 
   useEffect(() => {
     // Fetch equipment added by the logged-in user
-    fetch(`http://localhost:5000/myEquipment?email=${user?.email}`)
+    fetch(`https://assignment-10-server-5xhpg86ni-sohagtalukder18s-projects.vercel.app/myEquipment?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyEquipment(data);
@@ -43,7 +43,7 @@ const MyEquipmentList = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/equipment/${id}`, {
+        fetch(`https://assignment-10-server-7oo0pd2sc-sohagtalukder18s-projects.vercel.app/equipment/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
