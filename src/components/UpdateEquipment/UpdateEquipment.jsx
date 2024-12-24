@@ -36,7 +36,7 @@ const UpdateEquipment = () => {
     };
 
     // Send updated data to the server
-    fetch(`http://localhost:5000/equipment/${id}`, {
+    fetch(`https://assignment-1o-server-site.vercel.app/equipment/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -11,7 +11,7 @@ const Home = () => {
 
   // Fetch limited products
   useEffect(() => {
-    fetch("http://localhost:5000/equipment?limit=6")
+    fetch("https://assignment-1o-server-site.vercel.app/equipment?limit=6")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));

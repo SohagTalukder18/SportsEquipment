@@ -31,13 +31,13 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: ()=>fetch("http://localhost:5000/equipment?limit=6"),
-        
+        loader: () => fetch("https://assignment-1o-server-site.vercel.app/equipment?limit=6"),
+
       },
       {
         path: "/all-equipment",
         element: <AllEquipment></AllEquipment>,
-        
+
       },
       {
         path: "/add-equipment",
@@ -49,14 +49,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/equipment/update/:id",
-        element: <PrivateRoute><UpdateEquipment/></PrivateRoute>,
-        
-    
+        element: <PrivateRoute><UpdateEquipment /></PrivateRoute>,
+
+
       },
       {
         path: "/equipment/:id",
-        element: <PrivateRoute><ViewDetails/></PrivateRoute>,
-        
+        element: <PrivateRoute><ViewDetails /></PrivateRoute>,
+
       },
       {
         path: "register",

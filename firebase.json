@@ -11,9 +11,6 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ],
-    "scripts": {
-      "build": "react-scripts build"
-    }
+    ]
   }
 }

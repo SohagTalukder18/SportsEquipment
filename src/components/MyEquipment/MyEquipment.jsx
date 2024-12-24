@@ -43,7 +43,7 @@ const MyEquipmentList = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/equipment/${id}`, {
+        fetch(`https://assignment-1o-server-site.vercel.app/equipment/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

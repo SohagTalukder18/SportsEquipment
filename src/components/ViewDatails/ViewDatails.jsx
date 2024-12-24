@@ -8,7 +8,7 @@ const ViewDetails = () => {
 
   useEffect(() => {
     // Fetch item details by ID
-    fetch(`http://localhost:5000/equipment/${id}`)
+    fetch(`https://assignment-1o-server-site.vercel.app/equipment/${id}`)
       .then((res) => res.json())
       .then((data) => setItemDetails(data))
       .catch((error) => console.error("Error fetching item details:", error));

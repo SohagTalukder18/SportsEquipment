@@ -55,7 +55,7 @@ const LogIn = () => {
   //       email: user.email,
   //       photoURL: user.photoURL,
   //     };
-  //     await fetch("http://localhost:5000/addUser", {
+  //     await fetch("https://assignment-1o-server-site.vercel.app/addUser", {
   //       method: "POST",
   //       headers: { "Content-Type": "application/json" },
   //       body: JSON.stringify(userData),

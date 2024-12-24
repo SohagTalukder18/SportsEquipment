@@ -12,7 +12,7 @@ const AllSportsEquipment = () => {
 
   useEffect(() => {
     // Fetch all equipment
-    fetch("http://localhost:5000/equipment")
+    fetch("https://assignment-1o-server-site.vercel.app/equipment")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
