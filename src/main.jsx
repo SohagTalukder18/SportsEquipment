@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: ()=>fetch("https://assignment-10-server-7oo0pd2sc-sohagtalukder18s-projects.vercel.app//equipment?limit=6"),
+        loader: ()=>fetch("http://localhost:5000/equipment?limit=6"),
         
       },
       {
