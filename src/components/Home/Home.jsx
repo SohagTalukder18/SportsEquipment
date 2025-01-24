@@ -86,11 +86,11 @@ const Home = () => {
                 className="bg-white dark:bg-gray-700 dark:text-white shadow-md rounded-lg p-4 flex flex-col justify-between"
               >
 
-                <div className="w-96 h-48 bg-white">
+                <div className="w-full h-48 bg-white mx-auto">
                   <img
                     src={product.image}
                     alt={product.itemName}
-                    className="w-full h-full  rounded-md "
+                    className="w-full h-full p-2 rounded-md"
                   /></div>
                 <h3 className="text-lg font-bold mt-4">{product.itemName}</h3>
                 <p className="text-gray-500">Category: {product.categoryName}</p>

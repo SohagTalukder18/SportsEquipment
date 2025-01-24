@@ -6,15 +6,15 @@ import { AuthContext } from "../../Providers/AuthProvider";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
- 
+
   const { user, setUser, logOutUser } = useContext(AuthContext);
-  
+
   const navigate = useNavigate();
-  
+
 
   useEffect(() => {
-    document.documentElement.className = theme; 
-    localStorage.setItem("theme", theme); 
+    document.documentElement.className = theme;
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -23,8 +23,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logOutUser();
-    
-    navigate("/login"); 
+
+    navigate("/login");
   };
 
 
@@ -114,7 +114,7 @@ const Navbar = () => {
               >
                 Log Out
               </button>
-             
+
             </div>
           ) : (
             <div className="flex space-x-4">
@@ -149,6 +149,18 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <ul className="lg:hidden bg-blue-700 dark:bg-gray-900 text-white space-y-2 p-4">
+          {
+            user && (
+              <>
+                <img
+                  src={user.photoURL || "https://ibb.co.com/R6jHqJG"}
+                  alt="User"
+                  className="w-10 h-10 rounded-full"
+                  title={user.displayName || "User"}
+                />
+              </>
+            )
+          }
           <li>
             <Link to="/" className="block hover:underline">
               Home
@@ -182,7 +194,7 @@ const Navbar = () => {
                 Log Out
               </button>
 
-              
+
             </div>
           ) : (
             <div className="flex flex-col items-start space-y-2">
@@ -198,7 +210,7 @@ const Navbar = () => {
               >
                 Register
               </Link>
-              
+
             </div>
           )}
         </ul>
