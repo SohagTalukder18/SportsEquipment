@@ -70,7 +70,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-8 border-t border-gray-700 pt-4 text-center">
           <p className="text-gray-400">
-            &copy; {new Date().getFullYear()} SportsZone. All rights reserved.
+            &copy; {new Date().getFullYear()} SportsZone. All rights reserved. <br /> SOHAG TALUKDER.
           </p>
         </div>
       </div>
